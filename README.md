@@ -4,6 +4,10 @@ This is a PyTorch based minimal implementation of the transformers architecture 
 
 ## Components
 - Tokenizer (Embedding)
+- Module:
+    - Attention
+    - AddNorm
+    - MLP
 - Encoder:
-    - EncoderLayer
+- Decoder
     
