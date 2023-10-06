@@ -21,6 +21,11 @@ Minimal PyTorch implementation of the Transformers architecture from Vaswani et 
     - `Decoder.py`
         - `DecoderLayer`
         - `Decoder`
+    - `Transformer.py`
+        - `Transformer`
 - `Config/`
     - `Config.py`
+-  `BERT/`
+    - `BERT.py`
+        - `Bert`
     
