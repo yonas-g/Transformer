@@ -1,13 +1,18 @@
 # Transformers
 
-This is a PyTorch based minimal implementation of the transformers architecture [Attention Is All You Need](https://arxiv.org/abs/1706.03762) by Vaswani et al., 2017
+Minimal PyTorch implementation of the Transformers architecture from Vaswani et al.'s 2017 paper, [Attention Is All You Need](https://arxiv.org/abs/1706.03762). This repository serves as a deep dive into understanding key architectures and their nuances, including architecture design and training techniques.
 
 ## Components
 - Tokenizer (Embedding)
-- Module:
+
+- Modules:
     - Attention
     - AddNorm
     - MLP
+
 - Encoder:
+    - EncoderLayer
+    - Encoder
+
 - Decoder
     
