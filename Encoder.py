@@ -75,7 +75,7 @@ class Encoder(nn.Module):
             pos_ids = self.position_ids[:, :seq_length]
             position_embedding = self.positional_embedding(pos_ids)
 
-            tk_type_ids = torch.zeros(input_shape, dtype=torch.long, device=input_ids.device)
+            # tk_type_ids = torch.zeros(input_shape, dtype=torch.long, device=input_ids.device)
             # tk_type_embeds = self.tk_type_embedding(tk_type_ids)
 
             embeddings = input_embedding + position_embedding #+ tk_type_embeds
