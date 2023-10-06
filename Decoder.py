@@ -50,7 +50,55 @@ class Decoder(nn.Module):
 
     def __init__(self, config):
         super(Decoder, self).__init__()
-            
+        
+        # embedding
+        self.embedding = nn.Embedding(config.vocab_size, config.hidden_size)
+        self.positional_embedding = nn.Embedding(config.max_position_embeddings, config.hidden_size)
+
+        self.embed_layer_norm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        position_ids = torch.arange(config.max_position_embeddings).unsqueeze(0)
+        self.register_buffer('position_ids', position_ids)
+
+        # decoder layers
+        self.layers = nn.ModuleList([DecoderLayer(config) for _ in range(config.num_hidden_layers)])
+
+        # output layer
+        self.output_layer = nn.Linear(config.hidden_size, config.vocab_size)
+
+    
+    def embed(self, input_ids):
+        """
+        :param input_ids: [batch_size, seq_len]
+        :return: [batch_size, seq_len, hidden_size]
+        """
+        input_embed = self.embedding(input_ids)
+        seq_len = input_ids.size(1)
+        position_ids = self.position_ids[:, :seq_len]
+        position_embed = self.positional_embedding(position_ids)
+        # embed
+        embed = self.embed_layer_norm(input_embed + position_embed)
+        embed = self.dropout(embed)
+
+        return embed
+
     
     def forward(self, tgt, tgt_mask, memory, memory_mask):
-        pass
+        """
+        :param tgt: [batch_size, tgt_len]
+        :param tgt_mask: [batch_size, 1, tgt_len, tgt_len]
+        :param memory: [batch_size, src_len, hidden_size]
+        :param memory_mask: [batch_size, 1, 1, src_len]
+        :return: [batch_size, tgt_len, hidden_size]
+        """
+        # embed
+        embed = self.embed(tgt)
+        # decoder layers
+        for layer in self.layers:
+            embed = layer(embed, tgt_mask, memory, memory_mask)
+        
+        # output layer
+        output = self.output_layer(embed)
+        output = F.softmax(output, dim=-1)
+        
+        return output
