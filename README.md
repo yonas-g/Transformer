@@ -7,6 +7,9 @@ Minimal PyTorch implementation of the Transformers architecture from Vaswani et 
 
 - Modules:
     - Attention
+        - MultiHeadAttentionBase
+        - MultiHeadSelfAttention
+        - MultiHeadCrossAttention
     - AddNorm
     - MLP
 
@@ -15,4 +18,6 @@ Minimal PyTorch implementation of the Transformers architecture from Vaswani et 
     - Encoder
 
 - Decoder
+    - DecoderLayer
+    - Decoder
     
