@@ -52,7 +52,7 @@ class Encoder(nn.Module):
             # embedding
             self.embedding = nn.Embedding(config.vocab_size, config.hidden_size)
             self.positional_embedding = nn.Embedding(config.max_position_embeddings, config.hidden_size)
-            self.tk_type_embedding = nn.Embedding(config.type_vocab_size, config.hidden_size)
+            # self.tk_type_embedding = nn.Embedding(config.type_vocab_size, config.hidden_size)
 
             self.embed_layer_norm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
             self.dropout = nn.Dropout(config.hidden_dropout_prob)
@@ -76,9 +76,9 @@ class Encoder(nn.Module):
             position_embedding = self.positional_embedding(pos_ids)
 
             tk_type_ids = torch.zeros(input_shape, dtype=torch.long, device=input_ids.device)
-            tk_type_embeds = self.tk_type_embedding(tk_type_ids)
+            # tk_type_embeds = self.tk_type_embedding(tk_type_ids)
 
-            embeddings = input_embedding + position_embedding + tk_type_embeds
+            embeddings = input_embedding + position_embedding #+ tk_type_embeds
             embeddings = self.dropout(embeddings)
 
             return embeddings
